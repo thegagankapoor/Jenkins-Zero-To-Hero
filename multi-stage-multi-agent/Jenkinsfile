@@ -7,6 +7,15 @@ pipeline {
       }
       steps {
         sh 'mvn --version'
+        sh '''
+          echo "public class HelloWorld {" > HelloWorld.java
+          echo "  public static void main(String[] args) {" >> HelloWorld.java
+          echo "    System.out.println(\\"Hello, World!\\");" >> HelloWorld.java
+          echo "  }" >> HelloWorld.java
+          echo "}" >> HelloWorld.java
+          javac HelloWorld.java
+          java HelloWorld
+        '''
       }
     }
     stage('Front-end') {
