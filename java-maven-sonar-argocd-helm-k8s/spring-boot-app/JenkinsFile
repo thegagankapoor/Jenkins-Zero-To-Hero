@@ -2,7 +2,7 @@ pipeline {
   agent {
     docker {
       image 'thegagankapoor/maven-gagan-docker-agent:v2'
-      args '--privileged --user root -v /var/run/docker.sock:/var/run/docker.sock'
+      args '-v /var/run/docker.sock:/var/run/docker.sock'
     }
   }
   stages {
