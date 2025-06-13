@@ -1,4 +1,8 @@
 pipeline {
+  options {
+    // Enable debug mode
+    debug true
+  }
   agent {
     docker {
       image 'thegagankapoor/java17:v1'
