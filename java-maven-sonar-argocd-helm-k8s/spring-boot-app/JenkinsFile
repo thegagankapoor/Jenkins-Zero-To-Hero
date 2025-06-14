@@ -45,28 +45,45 @@ pipeline {
         }
       }
     }
-    stage('Update Deployment File') {
-        environment {
-            GIT_REPO_NAME = "Jenkins-Zero-To-Hero"
-            GIT_USER_NAME = "thegagankapoor"
-        }
-        steps {
-            dir('ultimate-cicd'){
-            withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
-                sh '''
-                    pwd
-                    git config user.email "gagankapoorr@gmail.com"
-                    git config user.name "thegagankapoor"
-                    BUILD_NUMBER=${BUILD_NUMBER}
-                    sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
-                    git add java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
-                    git commit -m "Update deployment image to version ${BUILD_NUMBER}"
-                    git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
-                '''
+    stage('Modify and Push Git Changes') {
+            steps {
+                // Change into the specific repository directory
+                dir('java-maven-sonar-argocd-helm-k8s') { // This is the Git repository directory
+                    script {
+                        // 1. Configure Git user (now correctly inside the repo)
+                        sh 'git config user.email "abhishek.xyz@gmail.com"'
+                        sh 'git config user.name "Abhishek Veeramalla"'
+ 
+                        // Make sure you are on a branch, not detached HEAD, if you intend to push to it
+                        // `git checkout main` or `git checkout -B main` if it might not exist
+                        sh 'git checkout main'
+                        // Alternatively, if the initial checkout was to a detached HEAD and you want to commit on top of it,
+                        // and push that exact HEAD, you can use:
+                        // sh 'git checkout -B jenkins-update' // Create a new branch for the changes
+                        // Then push `jenkins-update` branch. For simplicity, let's assume `main` is correct.
+ 
+                        // 2. Define BUILD_NUMBER (if not already an environment variable)
+                        env.BUILD_NUMBER = "11" // Assuming BUILD_NUMBER comes from somewhere else (e.g., Jenkins built-in)
+ 
+                        // 3. Perform the sed command
+                        sh "sed -i 's/replaceImageTag/${env.BUILD_NUMBER}/g' spring-boot-app-manifests/deployment.yml"
+                        // Note: The path here is now relative to 'java-maven-sonar-argocd-helm-k8s'
+ 
+                        // 4. Add and Commit changes
+                        sh 'git add spring-boot-app-manifests/deployment.yml'
+                        sh "git commit -m \"update deployment image to version ${env.BUILD_NUMBER}\""
+ 
+                        // 5. Push the changes
+                        // Use Jenkins Credentials for the GitHub Personal Access Token (PAT) for security
+                        withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
+                            sh 'git push https://oauth2:${GITHUB_TOKEN}@github.com/thegagankapoor/Jenkins-Zero-To-Hero.git main'
+                            // Ensure 'main' is the branch you intend to push to.
+                            // If you checked out to a new branch like 'jenkins-update', push that branch.
+                        }
+                    }
+                }
             }
-            }
-            
         }
-    }
+ 
   }
 }
