@@ -33,7 +33,7 @@ pipeline {
                     pwd
                     git config --global --add safe.directory /var/lib/jenkins/workspace/ultimate-cicd
                     BUILD_NUMBER=${BUILD_NUMBER}
-                    sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
+                    sed -i "s+thegagankapoor/ultimate-cicd.*+thegagankapoor/ultimate-cicd:${BUILD_NUMBER}+g" java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
                     git add -A
                     git commit -m "Update deployment image to version ${BUILD_NUMBER}"
                     git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
