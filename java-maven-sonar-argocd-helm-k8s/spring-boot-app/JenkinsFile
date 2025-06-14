@@ -26,7 +26,6 @@ pipeline {
             GIT_USER_NAME = "thegagankapoor"
         }
         steps {
-            dir('ultimate-cicd'){
             withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
                 sh '''
                     pwd
@@ -39,7 +38,7 @@ pipeline {
                     git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
                 '''
             }
-            }
+        
       
           }
             }
