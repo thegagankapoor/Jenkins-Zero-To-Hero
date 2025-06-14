@@ -26,9 +26,11 @@ pipeline {
             GIT_USER_NAME = "thegagankapoor"
         }
         steps {
-    
+            dir('spring-boot-app-manifests'){
             withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
                 sh '''
+                    git config --global user.email "you@example.com"
+                    git config --global user.name "Your Name"
                     pwd
                     git config --global --add safe.directory /var/lib/jenkins/workspace/ultimate-cicd
                     BUILD_NUMBER=${BUILD_NUMBER}
@@ -39,7 +41,7 @@ pipeline {
                 '''
             }
         
-    
+      }
           }
             }
   }      
