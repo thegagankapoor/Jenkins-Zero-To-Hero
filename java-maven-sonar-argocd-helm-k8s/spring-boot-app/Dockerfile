@@ -3,8 +3,7 @@
 FROM eclipse-temurin:17-jdk-alpine
 
 # Simply the artifact path
-target/demo-0.0.1-SNAPSHOT.jar 
-artifact=target/demo-0.0.1-SNAPSHOT.jar
+ARG artifact=target/demo-0.0.1-SNAPSHOT.jar
 
 WORKDIR /opt/app
 
