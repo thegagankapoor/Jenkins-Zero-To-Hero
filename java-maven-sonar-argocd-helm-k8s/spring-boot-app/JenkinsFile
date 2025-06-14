@@ -26,7 +26,7 @@ pipeline {
             GIT_USER_NAME = "thegagankapoor"
         }
         steps {
-            dir(spring-boot-app-manifests){
+            dir('spring-boot-app-manifests'){
             withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
                 sh '''
                     pwd
