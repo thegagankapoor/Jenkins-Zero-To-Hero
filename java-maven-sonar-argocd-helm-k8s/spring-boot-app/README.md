@@ -58,7 +58,7 @@ wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-10.4.1.88
 unzip *
 chmod -R 755 /home/sonarqube/sonarqube-10.4.1.88267
 chown -R sonarqube:sonarqube /home/sonarqube/sonarqube-10.4.1.88267
-cd sonarqube-9.4.0.54424/bin/linux-x86-64/
+cd sonarqube-10.4.1.88267/bin/linux-x86-64/
 ./sonar.sh start
 ```
 
