@@ -12,19 +12,21 @@ pipeline {
         deleteDir()
       }
     }
-  stages {
+
     stage('Checkout') {
       steps {
         sh 'echo passed'
         git branch: 'main', url: 'https://github.com/thegagankapoor/Jenkins-Zero-To-Hero.git'
       }
     }
+
     stage('Compile and Test') {
       steps {
         sh 'ls -ltr'
         sh 'cd java-maven-sonar-argocd-helm-k8s/spring-boot-app && mvn clean compile test'
       }
     }
+
     stage('Static Code Analysis') {
       environment {
         SONAR_URL = "http://3.111.214.237:9000"
@@ -35,11 +37,13 @@ pipeline {
         }
       }
     }
+
     stage('Package') {
       steps {
         sh 'cd java-maven-sonar-argocd-helm-k8s/spring-boot-app && mvn package'
       }
     }
+
     stage('Build and Push Docker Image') {
       environment {
         DOCKER_IMAGE = "thegagankapoor/pipeline-cicd:${BUILD_NUMBER}"
@@ -55,11 +59,13 @@ pipeline {
         }
       }
     }
+
     stage('Trivy Docker Scan') {
       steps {
         sh 'cd java-maven-sonar-argocd-helm-k8s/spring-boot-app && trivy image thegagankapoor/pipeline-cicd:${BUILD_NUMBER}'
       }
     }
+
     stage('Update Deployment File') {
       environment {
         GIT_REPO_NAME = "Jenkins-Zero-To-Hero"
