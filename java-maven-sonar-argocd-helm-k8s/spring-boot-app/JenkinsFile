@@ -1,10 +1,21 @@
 pipeline {
   agent {
     docker {
-      image 'thegagankapoor/docker-maven-image:v1'
+      image 'thegagankapoor/docker-maven-image:v1.1'
       args '--user root -v /var/run/docker.sock:/var/run/docker.sock'
     }
   }
+
+  options {
+    skipDefaultCheckout()
+  }
+
+  stages {
+    stage('Clean Workspace') {
+      steps {
+        deleteDir()
+      }
+    }
   stages {
     stage('Checkout') {
       steps {
