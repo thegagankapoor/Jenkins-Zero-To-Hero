@@ -48,6 +48,11 @@ pipeline {
         }
       }
     }
+    stage('Trivy Docker Scan') {
+      steps {
+        sh 'cd java-maven-sonar-argocd-helm-k8s/spring-boot-app && trivy image thegagankapoor/pipeline-cicd:${BUILD_NUMBER}'
+      }
+    }
     stage('Update Deployment File') {
       environment {
         GIT_REPO_NAME = "Jenkins-Zero-To-Hero"
