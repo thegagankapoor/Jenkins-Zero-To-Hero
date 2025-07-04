@@ -2,5 +2,5 @@ projectKey=com.example:demo
 serverUrl=http://3.111.214.237:9000
 serverVersion=10.4.1.88267
 dashboardUrl=http://3.111.214.237:9000/dashboard?id=com.example%3Ademo
-ceTaskId=ce31e241-229a-4c69-b1ff-3bfb9cc1d366
-ceTaskUrl=http://3.111.214.237:9000/api/ce/task?id=ce31e241-229a-4c69-b1ff-3bfb9cc1d366
+ceTaskId=d6a7443c-2952-4e47-aa6e-261e232a7fbd
+ceTaskUrl=http://3.111.214.237:9000/api/ce/task?id=d6a7443c-2952-4e47-aa6e-261e232a7fbd
