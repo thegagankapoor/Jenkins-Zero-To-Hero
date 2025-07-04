@@ -1,7 +1,7 @@
 pipeline {
   agent {
     docker {
-      image 'thegagankapoor/docker-maven-image:v1'
+      image 'thegagankapoor/docker-maven-image:v1.1'
       args '--user root -v /var/run/docker.sock:/var/run/docker.sock'
     }
   }
@@ -48,6 +48,11 @@ pipeline {
         }
       }
     }
+    stage('Trivy Docker Scan') {
+      steps {
+        sh 'cd java-maven-sonar-argocd-helm-k8s/spring-boot-app && trivy image thegagankapoor/pipeline-cicd:${BUILD_NUMBER}'
+      }
+    }
     stage('Update Deployment File') {
       environment {
         GIT_REPO_NAME = "Jenkins-Zero-To-Hero"
@@ -70,4 +75,4 @@ pipeline {
       }
     }
   }
-}
+ }
