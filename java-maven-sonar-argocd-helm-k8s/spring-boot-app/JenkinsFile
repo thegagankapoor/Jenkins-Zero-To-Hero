@@ -5,18 +5,6 @@ pipeline {
       args '--user root -v /var/run/docker.sock:/var/run/docker.sock'
     }
   }
-
-  options {
-    skipDefaultCheckout()
-  }
-
-  stages {
-    stage('Clean Workspace') {
-      steps {
-        deleteDir()
-      }
-    }
-
     stage('Checkout') {
       steps {
         sh 'echo passed'
